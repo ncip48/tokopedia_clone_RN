@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from './pages/HomeScreen';
 import Kategori from './pages/Kategori';
+import KategoriProduk from './pages/KategoriProduk';
 import Data from './pages/DataScreen';
 import Produk from './pages/Produk';
 import Setting from './pages/SettingsScreen';
@@ -61,6 +62,7 @@ export default function App() {
       }}>
         <Stack.Screen name='Home' component={MainTabNavigator}/>
         <Stack.Screen name="Produk Detail" component={ProdukDetail} />
+        <Stack.Screen name="Kategori Produk" component={KategoriProduk} />
       </Stack.Navigator>
     </NavigationContainer>
   );

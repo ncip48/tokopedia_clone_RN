@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 
-import { ScrollView, StyleSheet, FlatList, Text, View, Alert, ActivityIndicator, Platform, Image, RefreshControl, Dimensions} from 'react-native';
+import { StyleSheet, FlatList, Text, View, Alert, ActivityIndicator, Platform, Image, RefreshControl, Dimensions} from 'react-native';
 import { SearchBar,Header, Button } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SliderBox } from "react-native-image-slider-box";
 
 function currencyFormat(num) {
     return 'Rp ' + num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 
-export default class HomeScreen extends React.Component {
+export default class Produk extends React.Component {
   
   constructor(props)
   {
@@ -21,12 +20,8 @@ export default class HomeScreen extends React.Component {
         search: '',
         refreshing: false,
         isLoading: true,
-        images: [
-          "https://source.unsplash.com/1024x768/?nature",
-          "https://source.unsplash.com/1024x768/?water",
-          "https://source.unsplash.com/1024x768/?girl",
-          "https://source.unsplash.com/1024x768/?tree", // Network image
-        ]
+        id_kategori: this.props.route.params.item.id_kategori_produk,
+        item: this.props.route.params.item
   }
   }
 
@@ -40,7 +35,7 @@ export default class HomeScreen extends React.Component {
     }
 
      GetData(page) {
-        return fetch(`https://nusaserver.com/market_ncip/produk?type=json&page=${page}&search=${this.state.search}`)
+        return fetch(`http://192.168.1.104/market_ncip/produk/kategori?type=json&id=${this.state.id_kategori}&page=${page}`)
         .then((response) => response.json())
         .then((responseJson) => {
           this.setState({
@@ -103,7 +98,9 @@ export default class HomeScreen extends React.Component {
 
 
   render() {
+    const { navigation } = this.props;
     const { search } = this.state;
+
 
     
     return (
@@ -111,26 +108,25 @@ export default class HomeScreen extends React.Component {
 <Header
         statusBarProps={{ barStyle: 'dark-content', translucent: true, backgroundColor: 'white' }}
         barStyle="light-content" // or directly
-        //leftComponent={<Button type="clear" icon={<Ionicons name={"ios-arrow-back"} color={"#fc4426"} size={25} onPress={() => navigation.goBack()} />}/>}
-        centerComponent={
+        leftComponent={<Button type="clear" icon={<Ionicons name={"ios-arrow-back"} color={"#fc4426"} size={25} onPress={() => navigation.goBack()} />}/>}
+        /*centerComponent={
         <SearchBar
         placeholder="cari produk..."
-        onChangeText={this.updateSearch}
-        showLoading={this.state.showloadingsearch}
-        value={search}
         round={false}
         lightTheme={true}
+        searchIcon={true}
         showCancel={true}
         inputContainerStyle={{
           backgroundColor: '#e5e5e5',
         }}
+       
         containerStyle={{
             backgroundColor: 'transparent',
             margin: 0,
-            width: Dimensions.get('window').width-135,
-            right: 55,
+            width: Dimensions.get('window').width - 150,
+            right: 20,
             padding: 0,
-            borderRadius: 5
+            borderRadius: 5,
         }}
         inputStyle={{
           color: '#000',
@@ -139,59 +135,27 @@ export default class HomeScreen extends React.Component {
         }}
         //placeholderTextColor={'#000'}
       />
-      }
-      rightComponent={
+      }*/
+        centerComponent={<Text style={{fontSize: 18}}>Kategori {this.state.item.nama_kategori}</Text>}
+      /*rightComponent={
         <View style={{flexDirection:"row"}}>
-        <Button type="clear" icon={<Ionicons name={"ios-heart"} color={"#999999"} size={25} onPress={() => navigation.goBack()} />}/>
-        <Button type="clear" icon={<Ionicons name={"md-mail"} color={"#999999"} size={25} onPress={() => navigation.goBack()} />}/>
-        <Button type="clear" icon={<Ionicons name={"md-notifications"} color={"#999999"} size={25} onPress={() => navigation.goBack()} />}/>
+        <Button type="clear" icon={<Ionicons name={"md-share"} color={"#fc4426"} size={25} onPress={() => navigation.goBack()} />}/>
+        <Button type="clear" icon={<Ionicons name={"ios-cart"} color={"#fc4426"} size={25} onPress={() => navigation.goBack()} />}/>
+
         </View>
-      }
-      backgroundColor='transparent'
+      }*/
         containerStyle={{
           backgroundColor: 'light',
           justifyContent: 'space-around',
           padding: 0,
           backgroundColor: 'white'
-          //marginTop:10,
-          //position:'absolute',
-          //zIndex: 1
         }}
       />
-      
       {this.state.isLoading ? 
       <View style={{flex: 1, paddingTop: 20}}>
           <ActivityIndicator />
         </View>
       :
-      <ScrollView
-      refreshControl={
-          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
-        }
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        
-        >
-      <SliderBox 
-        images={this.state.images} 
-        autoplay
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          marginHorizontal: 0,
-          padding: 0,
-          margin: 0,
-          backgroundColor: "rgba(128, 128, 128, 0.92)"
-        }}
-        ImageComponentStyle={{
-          //marginTop: -100,
-          //position:'absolute',
-          //zIndex: 0
-          }}
-      />
-      <View style={styles.Card}>
-        <Text style={styles.Deskripsi}>Semua Produk</Text>
        <FlatList
        
           data={ this.state.dataSource }
@@ -211,16 +175,16 @@ export default class HomeScreen extends React.Component {
 
             </View>}
             numColumns = { 2 }
-            contentContainerStyle={{margin:5, marginTop:0}}
+
           keyExtractor={(item, index) => index}
-          
+          refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
+        }
         ListFooterComponent={this.renderFooter.bind(this)}
           onEndReachedThreshold={0.4}
           onEndReached={this.handleLoadMore.bind(this)}
           
          />
-         </View>
-         </ScrollView>
       }
     
     
@@ -236,20 +200,16 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
     flex:1,
-    backgroundColor: '#e5e5e5'
+    backgroundColor: '#fff'
     //margin: 10,
     //paddingTop: (Platform.OS === 'ios') ? 20 : 0,
 
     },
-    Card:{
-      backgroundColor: 'white',
-      marginBottom: 10
-    },
-    Deskripsi:{
-      margin: 15,
-      marginBottom:15,
-      fontSize: 14,
-      fontWeight: 'bold',
+
+    Row: {
+      //flex:1,
+      margin: 10,
+      paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     },
 
     Pembungkus: {

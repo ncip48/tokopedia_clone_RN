@@ -95,8 +95,8 @@ FlatListItemSeparator = () => {
           
           ItemSeparatorComponent = {this.FlatListItemSeparator}
  
-          renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={this.GetFlatListItem.bind(this, item.nama_kategori)} > {item.nama_kategori} </Text>}
- 
+          renderItem={({item}) => <Text style={styles.FlatListItemStyle} onPress={() => this.props.navigation.navigate('Kategori Produk', {item: item, })} > {item.nama_kategori} </Text>}
+          //onPress={() => this.props.navigation.navigate('Kategori Produk', {item: item, })}
           keyExtractor={(item, index) => index}
           refreshControl={
           <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
