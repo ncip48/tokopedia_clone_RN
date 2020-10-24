@@ -85,6 +85,9 @@ target 'Pasar' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'react-native-progress-bar-android', :path => '../node_modules/@react-native-community/progress-bar-android'
+
+
   target 'PasarTests' do
     inherit! :complete
     # Pods for testing

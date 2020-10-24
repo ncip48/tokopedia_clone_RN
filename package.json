@@ -10,7 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.10.3",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/progress-bar-android": "^1.0.2",
     "@react-navigation/bottom-tabs": "^5.2.7",
     "@react-navigation/native": "^5.1.6",
     "@react-navigation/stack": "^5.2.14",
@@ -18,23 +20,29 @@
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-chart-kit": "^5.4.0",
+    "react-native-easy-content-loader": "^0.3.2",
     "react-native-eject": "^0.1.2",
     "react-native-elements": "^1.2.7",
     "react-native-flash-message": "^0.1.15",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-slider-box": "^1.0.12",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-pull-refresh": "^1.0.0",
     "react-native-reanimated": "^1.8.0",
     "react-native-render-html": "^4.2.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
     "react-native-scrollable-tab-view": "^1.0.0",
+    "react-native-shimmer-placeholder": "^1.0.35",
     "react-native-svg": "^12.1.0",
+    "react-native-touchable-scale": "^2.1.1",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^9.4.0",
     "react-navigation": "^4.3.7",
     "react-navigation-stack": "^2.3.12",
-    "react-navigation-tabs": "^2.8.11"
+    "react-navigation-tabs": "^2.8.11",
+    "react-simple-line-icons": "^1.0.8",
+    "whatwg-fetch-timeout": "^2.0.2-timeout"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -48,5 +56,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+        "resources/fonts"
+    ]
   }
 }
